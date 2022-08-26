@@ -1,5 +1,12 @@
 extract obj_props
 
+// Config constants
+// N = 5 // Number of variables
+// M = 10 // Number of expressions (is variable)
+
+SPIKE_WALL_BLOCKS = 5 // height of spike wall at the end
+
+// Block ID constants
 TEXT_ID = 914
 BLACK_BLOCK_ID = 94
 DEFAULT_BLOCK_ID = 1
@@ -7,17 +14,12 @@ H_BLOCK_ID = 1859
 COLLISION_BLOCK_ID = 1816
 SPIKE_BLOCK_ID = 8
 
-N = 5 // Number of variables
-// M = 10 // Number of expressions (is variable)
-
-SPIKE_WALL_BLOCKS = 5 // height of spike wall at the end
-
 // util funcs
-
 // converts # blocks to coords
 blocks = (n_blocks) {
     return n_blocks * 30  // size per block
 }
+
 move_blocks = (n_blocks) {
     return n_blocks * 10  // I hate move triggers
 }
@@ -26,6 +28,22 @@ move_blocks = (n_blocks) {
 lcorner = (n_blocks) {
     return blocks(n_blocks + 0.5)
 }
+
+// read and parse expressions
+let expr_lines = @file::new("expr.txt").read().split("\n")
+first_line = expr_lines.pop(0)
+
+let N = first_line as @number
+let M = 0
+let exprs = []
+for line in expr_lines {
+    if !line.is_empty() {
+        M++
+        exprs.push(line.split(",").map(e => e as @number))
+    }
+}
+
+$.print("Got {} variables and {} expressions".fmt([N, M]))
 
 // current pos
 let cur_xpos = lcorner(3)
@@ -153,13 +171,17 @@ for i in 0..N {
     var_ypos.push(cur_ypos)
     cur_ypos += blocks(2)
 }
+// add expressions
+for expr in exprs {
+    cur_xpos += blocks(3)
 
-// read and parse expressions
-let M = 0
-let exprs = []
-
-// add expression
-cur_xpos += blocks(3)
+    for value in expr {
+        let ypos = var_ypos[value.abs() - 1]
+        if value > 0 {
+            ypos += blocks(1)
+        }
+    }
+}
 
 // spike wall and toggling
 cur_xpos += blocks(3)
