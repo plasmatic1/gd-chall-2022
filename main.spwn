@@ -30,7 +30,9 @@ lcorner = (n_blocks) {
 }
 
 // read and parse expressions
-let expr_file = @file::new("expr.txt")
+file_name = $.get_input("").trim()
+$.print("Reading boolean expression from {}...".fmt(file_name))
+let expr_file = @file::new(file_name)
 let expr_lines = expr_file.read().split("\n")
 first_line = expr_lines.pop(0)
 
@@ -43,7 +45,6 @@ for line in expr_lines {
         exprs.push(line.split(",").map(e => e.trim() as @number))
     }
 }
-
 $.print("Got {} variables and {} expressions".fmt([N, M]))
 
 // current pos
@@ -59,8 +60,6 @@ $.add(obj {
 
 // now we place variable indicators:
 cur_xpos += blocks(3)
-
-$.print(lcorner(1.05))
 
 let var_groups = []
 for i in 0..N {

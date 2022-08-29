@@ -1,15 +1,20 @@
 {
     "tasks": [
         {
-            "label": "Build",
+            "label": "Build (Debug)",
             "type": "shell",
-            "command": "spwn",
+            "command": ["echo", "expr_example.txt", "|", "spwn", "build", "main.spwn", "--level-name", "CTFCHALL2022", "--allow", "readfile"],
             "options": {
                 "cwd": "${workspaceFolder}"
             },
-            "args": [
-                "build", "main.spwn", "--level-name", "CTF CHALL 2022", "--allow", "readfile"
-            ]
+        },
+        {
+            "label": "Build (Release)",
+            "type": "shell",
+            "command": ["echo", "expr.txt", "|", "spwn", "build", "main.spwn", "--level-name", "CTFCHALL2022", "--allow", "readfile"],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
         }
     ]
 }
