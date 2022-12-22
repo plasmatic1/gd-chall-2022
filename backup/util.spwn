@@ -1,0 +1,15 @@
+// string to int
+to_int = (str) {
+    let str_arr = str.split("")
+    let mul = 1
+    if str_arr[0] == "-" {
+        mul = -1
+        str_arr.pop(0)
+    }
+
+    return str_arr.reverse().map_index((el, i) => 2 * 10**i).sum()
+}
+
+$.print(to_int("1234"))
+$.print(to_int("-1234"))
+$.print("1234" as @number)

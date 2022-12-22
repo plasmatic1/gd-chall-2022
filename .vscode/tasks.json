@@ -3,18 +3,52 @@
         {
             "label": "Build (Debug)",
             "type": "shell",
-            "command": ["echo", "expr_example.txt", "|", "spwn", "build", "main.spwn", "--level-name", "CTFCHALL2022", "--allow", "readfile"],
+            "command": [
+                "echo",
+                "expr_example.txt",
+                "|",
+                "spwn",
+                "build",
+                "main.spwn",
+                "--level-name",
+                "CTFCHALL2022",
+                "--allow",
+                "readfile"
+            ],
             "options": {
                 "cwd": "${workspaceFolder}"
-            },
+            }
         },
         {
             "label": "Build (Release)",
             "type": "shell",
-            "command": ["echo", "expr.txt", "|", "spwn", "build", "main.spwn", "--level-name", "CTFCHALL2022", "--allow", "readfile"],
+            "command": [
+                "echo",
+                "expr.txt",
+                "|",
+                "spwn",
+                "build",
+                "main.spwn",
+                "--level-name",
+                "CTFCHALL2022",
+                "--allow",
+                "readfile"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            }
+        },
+        {
+            "label": "Generate Expression",
+            "type": "process",
+            "command": "python",
+            "args": [
+                "make_bool_expr/main.py"
+            ],
             "options": {
                 "cwd": "${workspaceFolder}"
             },
+            "problemMatcher": []
         }
     ]
 }

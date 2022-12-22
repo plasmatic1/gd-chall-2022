@@ -1,0 +1,1 @@
+And(Nor(Nand(inp[4], Not(inp[7])), Not(And(Not(inp[1]), inp[6]))), Not(Not(And(And(inp[2], Not(inp[5])), Not(Not(And(Not(inp[3]), inp[0])))))))
