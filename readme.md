@@ -22,10 +22,16 @@ There are three recipes that you should run:
 * `debug`: Generates the level for the example expression for debugging purposes (in `gates_example.txt`)
 * `dry`: Performs a dry run on the example expression
 
-## Generating Expression
+A more detailed explanation is given below:
+
+### Generating the Expression
+
+.... TBD ...
+
+### Generating the Level
 
 .... TBD ...
 
 # Notes
 
-* `backup-1` and `backup-2` are older versions of spwn code and 
+* `backup-1` and `backup-2` are older versions of the spwn code for this challenge
