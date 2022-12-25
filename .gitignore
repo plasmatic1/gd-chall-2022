@@ -3,5 +3,4 @@ old_ver/expr.txt
 old_ver/make_bool_expr/pysatData
 
 # new version
-gates_conv_circuit.txt
-gates_conv_sat.txt
+gates_conv_*.txt

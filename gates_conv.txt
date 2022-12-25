@@ -1,0 +1,637 @@
+256
+635
+inp 62
+not 256 62
+inp 161
+and 257 256 161
+inp 215
+not 258 215
+inp 82
+nand 259 258 82
+not 260 259
+nand 261 257 260
+inp 183
+not 262 183
+inp 137
+and 263 262 137
+inp 239
+inp 216
+not 264 216
+nand 265 239 264
+not 266 265
+nand 267 263 266
+nor 268 261 267
+inp 124
+inp 70
+nand 269 124 70
+inp 251
+inp 64
+not 270 64
+nand 271 251 270
+or 272 269 271
+inp 158
+inp 228
+nor 273 158 228
+inp 191
+inp 80
+nor 274 191 80
+nand 275 273 274
+nor 276 272 275
+nand 277 268 276
+inp 17
+inp 24
+not 278 24
+and 279 17 278
+inp 181
+inp 12
+and 280 181 12
+and 281 279 280
+inp 56
+inp 179
+or 282 56 179
+inp 121
+inp 77
+not 283 77
+nand 284 121 283
+or 285 282 284
+not 286 285
+and 287 281 286
+inp 123
+inp 134
+or 288 123 134
+not 289 288
+inp 227
+inp 164
+and 290 227 164
+and 291 289 290
+inp 163
+inp 27
+or 292 163 27
+not 293 292
+inp 236
+inp 84
+nor 294 236 84
+and 295 293 294
+and 296 291 295
+nand 297 287 296
+nor 298 277 297
+inp 244
+not 299 244
+inp 49
+and 300 299 49
+inp 226
+inp 210
+nand 301 226 210
+not 302 301
+and 303 300 302
+inp 197
+not 304 197
+inp 7
+nand 305 304 7
+not 306 305
+inp 252
+inp 232
+nor 307 252 232
+and 308 306 307
+nand 309 303 308
+inp 142
+inp 152
+not 310 152
+and 311 142 310
+inp 212
+not 312 212
+inp 172
+nand 313 312 172
+not 314 313
+and 315 311 314
+inp 71
+inp 147
+or 316 71 147
+inp 166
+not 317 166
+inp 129
+nand 318 317 129
+nor 319 316 318
+nand 320 315 319
+or 321 309 320
+inp 60
+not 322 60
+inp 122
+nand 323 322 122
+not 324 323
+inp 38
+inp 176
+not 325 176
+and 326 38 325
+and 327 324 326
+inp 39
+not 328 39
+inp 207
+and 329 328 207
+inp 98
+inp 156
+nor 330 98 156
+nand 331 329 330
+not 332 331
+nand 333 327 332
+inp 211
+inp 238
+not 334 238
+nand 335 211 334
+inp 61
+inp 143
+nand 336 61 143
+or 337 335 336
+inp 83
+inp 208
+or 338 83 208
+inp 100
+inp 41
+nand 339 100 41
+or 340 338 339
+or 341 337 340
+or 342 333 341
+or 343 321 342
+not 344 343
+nand 345 298 344
+not 346 345
+inp 184
+inp 243
+nor 347 184 243
+inp 66
+inp 118
+nand 348 66 118
+not 349 348
+and 350 347 349
+inp 214
+inp 233
+or 351 214 233
+inp 159
+inp 188
+nand 352 159 188
+or 353 351 352
+not 354 353
+nand 355 350 354
+inp 5
+inp 135
+and 356 5 135
+inp 218
+inp 195
+not 357 195
+nand 358 218 357
+not 359 358
+nand 360 356 359
+not 361 360
+inp 112
+not 362 112
+inp 189
+and 363 362 189
+inp 220
+not 364 220
+inp 90
+and 365 364 90
+and 366 363 365
+nand 367 361 366
+nor 368 355 367
+inp 104
+not 369 104
+inp 202
+and 370 369 202
+inp 30
+not 371 30
+inp 37
+nand 372 371 37
+not 373 372
+and 374 370 373
+inp 160
+inp 144
+or 375 160 144
+inp 203
+inp 247
+nand 376 203 247
+or 377 375 376
+not 378 377
+nand 379 374 378
+not 380 379
+inp 0
+inp 52
+nor 381 0 52
+inp 167
+inp 204
+not 382 204
+and 383 167 382
+nand 384 381 383
+inp 186
+inp 95
+not 385 95
+and 386 186 385
+inp 42
+not 387 42
+inp 74
+nand 388 387 74
+not 389 388
+nand 390 386 389
+nor 391 384 390
+nand 392 380 391
+not 393 392
+and 394 368 393
+inp 187
+not 395 187
+inp 132
+nand 396 395 132
+inp 23
+not 397 23
+inp 106
+nand 398 397 106
+or 399 396 398
+not 400 399
+inp 51
+not 401 51
+inp 113
+and 402 401 113
+inp 33
+inp 175
+and 403 33 175
+and 404 402 403
+nand 405 400 404
+inp 44
+inp 196
+nand 406 44 196
+not 407 406
+inp 200
+inp 116
+nor 408 200 116
+nand 409 407 408
+not 410 409
+inp 241
+inp 151
+or 411 241 151
+not 412 411
+inp 50
+inp 178
+and 413 50 178
+and 414 412 413
+nand 415 410 414
+or 416 405 415
+inp 221
+inp 224
+nor 417 221 224
+inp 4
+inp 48
+nor 418 4 48
+and 419 417 418
+inp 28
+inp 148
+or 420 28 148
+not 421 420
+inp 225
+inp 190
+nor 422 225 190
+nand 423 421 422
+not 424 423
+and 425 419 424
+inp 25
+inp 165
+nand 426 25 165
+not 427 426
+inp 45
+inp 20
+not 428 20
+and 429 45 428
+and 430 427 429
+inp 54
+inp 253
+not 431 253
+nand 432 54 431
+inp 88
+not 433 88
+inp 2
+nand 434 433 2
+or 435 432 434
+not 436 435
+and 437 430 436
+nand 438 425 437
+or 439 416 438
+not 440 439
+and 441 394 440
+and 442 346 441
+inp 173
+inp 223
+and 443 173 223
+inp 11
+not 444 11
+inp 78
+nand 445 444 78
+not 446 445
+nand 447 443 446
+inp 245
+not 448 245
+inp 194
+and 449 448 194
+inp 101
+inp 91
+not 450 91
+nand 451 101 450
+not 452 451
+nand 453 449 452
+or 454 447 453
+inp 8
+not 455 8
+inp 55
+and 456 455 55
+inp 47
+inp 115
+nand 457 47 115
+not 458 457
+and 459 456 458
+inp 140
+inp 162
+nand 460 140 162
+inp 9
+inp 40
+not 461 40
+nand 462 9 461
+or 463 460 462
+not 464 463
+nand 465 459 464
+nor 466 454 465
+inp 32
+not 467 32
+inp 182
+and 468 467 182
+inp 133
+inp 131
+not 469 131
+nand 470 133 469
+not 471 470
+nand 472 468 471
+inp 155
+not 473 155
+inp 79
+nand 474 473 79
+not 475 474
+inp 3
+inp 15
+not 476 15
+and 477 3 476
+nand 478 475 477
+or 479 472 478
+inp 141
+inp 127
+and 480 141 127
+inp 102
+inp 180
+and 481 102 180
+nand 482 480 481
+inp 145
+inp 209
+nand 483 145 209
+not 484 483
+inp 185
+inp 201
+and 485 185 201
+nand 486 484 485
+or 487 482 486
+nor 488 479 487
+nand 489 466 488
+inp 250
+inp 235
+not 490 235
+nand 491 250 490
+not 492 491
+inp 69
+not 493 69
+inp 126
+and 494 493 126
+nand 495 492 494
+inp 168
+inp 171
+or 496 168 171
+not 497 496
+inp 68
+not 498 68
+inp 193
+and 499 498 193
+nand 500 497 499
+or 501 495 500
+not 502 501
+inp 109
+inp 229
+not 503 229
+nand 504 109 503
+inp 107
+not 505 107
+inp 146
+nand 506 505 146
+or 507 504 506
+not 508 507
+inp 254
+inp 248
+or 509 254 248
+inp 198
+not 510 198
+inp 242
+nand 511 510 242
+nor 512 509 511
+and 513 508 512
+nand 514 502 513
+inp 222
+not 515 222
+inp 234
+nand 516 515 234
+inp 240
+not 517 240
+inp 67
+nand 518 517 67
+nor 519 516 518
+inp 14
+inp 29
+not 520 29
+and 521 14 520
+inp 58
+inp 99
+and 522 58 99
+nand 523 521 522
+not 524 523
+nand 525 519 524
+inp 63
+inp 150
+not 526 150
+nand 527 63 526
+inp 119
+not 528 119
+inp 22
+nand 529 528 22
+nor 530 527 529
+inp 72
+not 531 72
+inp 157
+and 532 531 157
+inp 217
+not 533 217
+inp 174
+nand 534 533 174
+not 535 534
+and 536 532 535
+nand 537 530 536
+or 538 525 537
+or 539 514 538
+nor 540 489 539
+inp 170
+inp 249
+not 541 249
+and 542 170 541
+inp 206
+inp 177
+nand 543 206 177
+not 544 543
+nand 545 542 544
+inp 26
+inp 75
+nand 546 26 75
+not 547 546
+inp 149
+inp 108
+not 548 108
+and 549 149 548
+nand 550 547 549
+or 551 545 550
+inp 97
+inp 103
+and 552 97 103
+inp 96
+inp 53
+or 553 96 53
+not 554 553
+nand 555 552 554
+not 556 555
+inp 13
+inp 136
+not 557 136
+and 558 13 557
+inp 231
+inp 31
+and 559 231 31
+and 560 558 559
+nand 561 556 560
+or 562 551 561
+inp 205
+not 563 205
+inp 255
+nand 564 563 255
+not 565 564
+inp 65
+inp 89
+and 566 65 89
+nand 567 565 566
+not 568 567
+inp 213
+inp 57
+and 569 213 57
+inp 46
+inp 81
+and 570 46 81
+and 571 569 570
+nand 572 568 571
+not 573 572
+inp 219
+inp 128
+nor 574 219 128
+inp 105
+inp 19
+not 575 19
+nand 576 105 575
+not 577 576
+and 578 574 577
+inp 6
+not 579 6
+inp 139
+and 580 579 139
+inp 114
+inp 85
+nand 581 114 85
+not 582 581
+and 583 580 582
+and 584 578 583
+nand 585 573 584
+nor 586 562 585
+inp 246
+inp 16
+nor 587 246 16
+inp 230
+inp 94
+nor 588 230 94
+and 589 587 588
+inp 237
+inp 120
+nor 590 237 120
+inp 138
+not 591 138
+inp 1
+nand 592 591 1
+not 593 592
+and 594 590 593
+nand 595 589 594
+not 596 595
+inp 199
+inp 110
+and 597 199 110
+inp 130
+inp 154
+and 598 130 154
+and 599 597 598
+inp 87
+inp 86
+not 600 86
+nand 601 87 600
+not 602 601
+inp 43
+inp 18
+and 603 43 18
+nand 604 602 603
+not 605 604
+and 606 599 605
+and 607 596 606
+inp 36
+inp 169
+nand 608 36 169
+not 609 608
+inp 34
+inp 125
+and 610 34 125
+nand 611 609 610
+inp 73
+inp 93
+nand 612 73 93
+inp 153
+inp 92
+not 613 92
+nand 614 153 613
+or 615 612 614
+or 616 611 615
+not 617 616
+inp 59
+inp 35
+not 618 35
+nand 619 59 618
+not 620 619
+inp 192
+inp 117
+nor 621 192 117
+and 622 620 621
+inp 76
+inp 21
+nor 623 76 21
+inp 111
+not 624 111
+inp 10
+and 625 624 10
+nand 626 623 625
+not 627 626
+and 628 622 627
+nand 629 617 628
+not 630 629
+and 631 607 630
+and 632 586 631
+and 633 540 632
+and 634 442 633

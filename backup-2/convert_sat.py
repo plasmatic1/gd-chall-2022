@@ -18,8 +18,12 @@ class InputMaker:
         assert len(self.inputs) == max(self.inputs.keys()) + 1
         return len(self.inputs)
 
-inp = InputMaker()
-with open(sys.argv[1]) as f:
-    tree = eval(f.read())
+def main():
+    inp = InputMaker()
+    with open(sys.argv[1]) as f:
+        tree = eval(f.read())
 
-print(to_cnf(tree))
+    print(to_cnf(tree))
+
+if __name__ == '__main__':
+    main()

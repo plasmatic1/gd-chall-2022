@@ -65,7 +65,7 @@ def main():
     lines = []
 
     def process_circuit(g: Gate) -> int:
-        global cur_g_id, lines
+        nonlocal cur_g_id, lines
 
         if isinstance(g, Input):
             lines.append(f'{g.t} {g.g_id}')
@@ -89,7 +89,7 @@ def main():
     lines.append(str(inp.n_inputs()))
     process_circuit(tree)
     lines.insert(1, str(cur_g_id))
-    with open('gates_conv_circuit.txt', 'w') as f:
+    with open(sys.argv[2], 'w') as f:
         for line in lines:
             print(line)
             f.write(line + '\n')

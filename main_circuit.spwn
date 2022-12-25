@@ -1,9 +1,5 @@
 extract obj_props
 
-// Config constants
-// N = 5 // Number of variables
-// M = 10 // Number of expressions (is variable)
-
 SPIKE_WALL_BLOCKS = 5 // height of spike wall at the end
 
 // Block ID constants
@@ -12,7 +8,7 @@ BLACK_BLOCK_ID = 94
 DEFAULT_BLOCK_ID = 1
 H_BLOCK_ID = 1859
 COLLISION_BLOCK_ID = 1816
-SPIKE_BLOCK_ID = 8
+SPIKE_BLOCK_ID = 8 // stereo madness spikes
 
 // util funcs
 // converts # blocks to coords
@@ -49,11 +45,11 @@ $.add(obj {
     OBJ_ID: TEXT_ID,
     X: cur_xpos,
     Y: lcorner(3.5),
-    TEXT: $.b64encode("input{")
+    TEXT: $.b64encode("input:")
 })
 
 // now we place variable indicators:
-cur_xpos += blocks(4)
+cur_xpos += blocks(5)
 
 let var_groups = []
 for i in 0..N {
