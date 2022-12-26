@@ -28,7 +28,26 @@ A more detailed explanation is given below:
 
 .... TBD ...
 
+#### Converting Solution to Text
+
+Since the flag is in the form `idek{<ascii>}`, we must be able to convert our solution into a valid flag for the user.  In this case, the flag is encoded as:
+
+```
+like
+say hello
+01101000 + 01100101 + ... 
+first is h
+then is e
+and so on
+```
+
+... TBD ...
+
 ### Generating the Level
+
+When generating the level, there are some invariants from the converted gates format that are assumed, such as:
+
+* The inputs for a gate will always show up before a gate itself, so we can process them left-right
 
 .... TBD ...
 

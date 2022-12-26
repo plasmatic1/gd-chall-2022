@@ -7,6 +7,7 @@ debug: genexp main_circuit.spwn
 	echo gates_conv_example.txt | spwn build main_circuit.spwn $(SPWNFLAGS) 
 
 dry: genexp main_circuit.spwn
+	cd
 	echo gates_conv_example.txt | spwn build main_circuit.spwn $(SPWNFLAGS) --no-level
 
 genexp: convert_circuit.py gates.txt gates_example.txt

@@ -1,14 +1,16 @@
 extract obj_props
 
-SPIKE_WALL_BLOCKS = 5 // height of spike wall at the end
+OBSTACLE_HEIGHT = 15 // height of spike wall at the end
 
 // Block ID constants
 TEXT_ID = 914
 BLACK_BLOCK_ID = 94
-DEFAULT_BLOCK_ID = 1
+BLANK_NO_SOLID_ID = 211 // solid colour blocks from electrodynamix/1.7
+DEFAULT_SOLID_ID = 1 // default solid block in stereo madness
+DEFAULT_NO_SOLID_ID = 5 // default block with no hitbox in stereo madness
 H_BLOCK_ID = 1859
 COLLISION_BLOCK_ID = 1816
-SPIKE_BLOCK_ID = 8 // stereo madness spikes
+SPIKE_BLOCK_ID = 8 // spikes in stereo madness
 
 // util funcs
 // converts # blocks to coords
@@ -25,22 +27,110 @@ lcorner = (n_blocks) {
     return blocks(n_blocks + 0.5)
 }
 
-// read and parse expressions
-let expr_file_path = $.get_input("")
-$.print("Reading boolean expression from {}...".fmt(expr_file_path))
-let expr_lines = @file::new(expr_file_path).read().split("\n")
-
-let num_inputs = expr_lines.shift().trim() as @number
-let num_gates = expr_lines.shift().trim() as @number
-let gates = []
-for line in expr_lines {
+// each gate/boolean value has its own y-value.  The base y-value is the false position, while adding 1 block to it makes it the true position
+gate_ypos = (gate_id) {
+    return lcorner(2 + 2 * gate_id)
 }
+
+// python chr function but only for printable ascii
+chr_printable = (n) {
+    $.assert(33 <= n && n <= 126) // must be printable
+    lets = "!\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~"
+    return lets[n - 33]
+}
+
+// converts a number to hexadecimal, prefixing it with `0x`.  You can supply a padding value for the minimum number of digits in the result (leading zeroes will be added if needed)
+hex = (let n, pad=0) {
+    digits = "0123456789abcdef"
+    let strrep = []
+    while (n > 0 || strrep.length < pad) {
+        strrep.push(digits[n % 16])
+        n /%= 16
+    }
+    return strrep.reverse().join("")
+}
+
+// lock to player X stuff
+_lock_x_group = ?g
+$.add(obj {
+    OBJ_ID: DEFAULT_SOLID_ID,
+    X: 0,
+    Y: blocks(-5),
+    GROUPS: _lock_x_group
+})
+$.add(move_trigger(_lock_x_group, 0, 0, 999999).with(X, 0).with(LOCK_TO_PLAYER_X, true))
+
+// starting from x-position `xpos`, group `group` will be locked to the player
+lock_to_player_x = (group, xpos) {
+    $.add(follow_trigger(_lock_x_group, group, duration=999999).with(X, xpos))
+    // $.add(move_trigger(group, 0, 0, 999999).with(X, xpos).with(LOCK_TO_PLAYER_X, true))
+}
+
+// util types
+type @gate
+type @gate_input
+
+// read and parse expressions into usable format
+// also set the options for each gate depending on its type
+expr_file_path = $.get_input("").trim()
+$.print("Reading boolean expression from {}...".fmt(expr_file_path))
+let expr_file = @file::new(expr_file_path)
+let expr_lines = expr_file.read().trim().split("\n")
+
+num_inputs = expr_lines.shift().trim() as @number
+num_gates = expr_lines.shift().trim() as @number
+
+let gates = ((0..num_gates) as @array).map((_) => null) 
+let input_groups = ((0..num_inputs) as @array).map((_) => null) 
+
+for line in expr_lines {
+    let opt = line.split(" ").map(s => s.trim())
+    id = opt[1] as @number
+    group = ?g
+
+    // shorthand for generating the input gate object given whether each gate is inverted or not
+    make_inputs = (invert_opts: @array) {
+        return ((0..invert_opts.length) as @array).map(i => @gate_input::{ id: opt[2 + i] as @number, invert: invert_opts[i] })
+    }
+
+    let inputs = []
+    let invert = false
+    if opt[0] == "not" {
+        inputs = make_inputs([true])
+        invert = false
+    } else if opt[0] == "or" {
+        inputs = make_inputs([false, false])
+        invert = false
+    } else if opt[0] == "and" {
+        inputs = make_inputs([true, true])
+        invert = true
+    } else if opt[0] == "nand" {
+        inputs = make_inputs([true, true])
+        invert = false
+    } else if opt[0] == "nor" {
+        inputs = make_inputs([false, false])
+        invert = true
+    } else if opt[0] == "inp" {
+        input_groups[id] = group
+    } else {
+        $.assert(false) // should never reach this case
+    }
+
+    gates[id] = @gate::{
+        group: group,
+        inputs: inputs,
+        invert: invert,
+        gate_type: opt[0]
+    }
+}
+$.assert(input_groups.all(o => o.type != @NULL)) // make sure that every input group has been defined
+$.assert(gates.all(o => o.type != @NULL)) // make sure that every gate has been defined
 $.print("Got {} input gates and {} gates total".fmt([num_inputs, num_gates]))
 
 // current pos
 let cur_xpos = lcorner(2)
 
-// initial text object
+// inputting in default
 $.add(obj {
     OBJ_ID: TEXT_ID,
     X: cur_xpos,
@@ -48,12 +138,10 @@ $.add(obj {
     TEXT: $.b64encode("input:")
 })
 
-// now we place variable indicators:
-cur_xpos += blocks(5)
+cur_xpos += blocks(3)
 
-let var_groups = []
-for i in 0..N {
-    group = ?g
+for i in 0..num_inputs {
+    group = input_groups[i]
 
     // text objects
     $.add(obj {
@@ -80,7 +168,7 @@ for i in 0..N {
 
     // block to hit and triggers
     $.add(obj {
-        OBJ_ID: DEFAULT_BLOCK_ID,
+        OBJ_ID: DEFAULT_SOLID_ID,
         X: cur_xpos,
         Y: lcorner(1.05)
     })
@@ -95,8 +183,192 @@ for i in 0..N {
 
     // go to next group
     cur_xpos += blocks(2)
-    var_groups.push(group)
 }
+
+done_input_xpos = cur_xpos // value of cur_xpos right after all the inputs were set, can be used to do tasks that only require input early
+
+// on the same x-position as the line of collision blocks, add a jump blocking mechanism
+jump_blocker_group = ?g
+jump_blocker_group.alpha(0)
+
+for i in 1..OBSTACLE_HEIGHT {
+    $.add(obj {
+        OBJ_ID: DEFAULT_SOLID_ID,
+        X: cur_xpos,
+        Y: lcorner(i),
+        OPACITY: 0,
+        GROUPS: jump_blocker_group
+    })
+}
+
+$.add(obj {
+    OBJ_ID: H_BLOCK_ID,
+    X: cur_xpos,
+    Y: lcorner(0),
+    GROUPS: jump_blocker_group
+})
+
+$.add(obj {
+    OBJ_ID: H_BLOCK_ID,
+    X: cur_xpos,
+    Y: lcorner(1),
+    GROUPS: jump_blocker_group
+})
+
+lock_to_player_x(jump_blocker_group, cur_xpos)
+// $.add(lock_to_player_trigger(jump_blocker_group, lock_x=true, lock_y=false, duration=999999).with(X, cur_xpos))
+
+// create the line of collision blocks that move with the player
+sweep_group = ?g // group of blocks that sweeps with the player
+coll_in = ?b
+coll_out = ?b
+
+for i in 0..num_gates {
+    $.add(obj {
+        OBJ_ID: COLLISION_BLOCK_ID,
+        X: cur_xpos,
+        Y: gate_ypos(i),
+        GROUPS: [sweep_group, gates[i].group],
+        BLOCK_A: coll_in,
+        DYNAMIC_BLOCK: true
+    })
+}
+
+lock_to_player_x(sweep_group, cur_xpos)
+// $.add(lock_to_player_trigger(sweep_group, lock_x=true, lock_y=false, duration=999999).with(X, cur_xpos))
+cur_xpos += blocks(2)
+
+// implement the logic part of each gate
+detector_group = ?g
+
+on(collision(coll_in, coll_out), !{ // collision between the binary values and the 'detectors' for each gate
+    detector_group.move(0, move_blocks(1))
+    wait(0.2)
+    detector_group.move(0, move_blocks(-1))
+})
+
+for i in 0..num_gates {
+    g = gates[i]
+    if g.gate_type != "inp" {
+        // component that the player touches to 'detect' that a gate is on
+        touch_ypos = lcorner(0) if g.invert else lcorner(-1)
+        $.add(obj {
+            OBJ_ID: DEFAULT_NO_SOLID_ID,
+            X: cur_xpos,
+            Y: touch_ypos,
+            GROUPS: detector_group,
+            SCALING: 0.5,
+        })
+        $.add(
+            move_trigger(g.group, 0, move_blocks(1)).with(X, cur_xpos).with(Y, touch_ypos).with(TOUCH_TRIGGERED, true).with(SCALING, 0.5).with(GROUPS, detector_group)
+        )
+
+        for in_g in g.inputs {
+            $.add(obj {
+                OBJ_ID: COLLISION_BLOCK_ID,
+                X: cur_xpos, 
+                Y: gate_ypos(in_g.id) + (0 if in_g.invert else blocks(1)),
+                BLOCK_A: coll_out,
+                DYNAMIC_BLOCK: false,
+                SCALING: 0.75,
+            })
+        }
+
+        cur_xpos += blocks(3)
+    }
+}
+
+// add spike wall at the end
+spike_wall_check_coll = ?b
+spike_wall_group = ?g
+
+on(collision(coll_in, spike_wall_check_coll), !{ // turn off spike wall if the end is triggered
+    spike_wall_group.toggle_off()
+})
+
+$.add(obj {
+    OBJ_ID: COLLISION_BLOCK_ID,
+    X: cur_xpos,
+    Y: gate_ypos(num_gates - 1) + blocks(1),
+    BLOCK_A: spike_wall_check_coll,
+    DYNAMIC_BLOCK: false,
+    SCALING: 0.85,
+})
+cur_xpos += blocks(2)
+
+for i in 0..OBSTACLE_HEIGHT {
+    $.add(obj {
+        OBJ_ID: SPIKE_BLOCK_ID,
+        X: cur_xpos,
+        Y: lcorner(i),
+        GROUPS: spike_wall_group
+    })
+}
+cur_xpos += blocks(2)
+
+// character display at the end
+cur_xpos += blocks(2)
+$.add(obj { // flag prefix
+    OBJ_ID: TEXT_ID,
+    X: cur_xpos,
+    Y: lcorner(2),
+    TEXT: $.b64encode("idek{")
+})
+cur_xpos += blocks(2)
+
+printable_color = 1c // default = white, also default colour channel
+unprintable_color = 100c // prevent conflicts
+unprintable_color.set(rgb(1, 0, 0)) // red
+
+for i in 0..(num_inputs /% 8) {
+    char_group = ?g
+
+    // place text blocks for each character
+    for j in 0..256 {
+        printable = 33 <= j && j <= 126
+        $.add(obj {
+            OBJ_ID: TEXT_ID,
+            X: cur_xpos, 
+            Y: lcorner(2 + j),
+            Z_LAYER: 2,
+            Z_ORDER: 998,
+            GROUPS: char_group,
+
+            TEXT: $.b64encode(chr_printable(j) if printable else hex(j, 2)),
+            COLOR: printable_color if printable else unprintable_color,
+            SCALING: 1 if printable else 0.6,
+        })
+    }
+
+    // place blank blocks that obscure text blocks that should be hidden
+    for j in 0..258 {
+        if j != 2 {
+            $.add(obj {
+                OBJ_ID: BLANK_NO_SOLID_ID,
+                X: cur_xpos, 
+                Y: lcorner(j),
+                Z_LAYER: 2,
+                Z_ORDER: 999
+            })
+        }
+    }
+
+    // add triggers to calculate correct value for each letter
+    for j in 0..8 {
+        power = 2**(7 - j)
+        $.add(move_trigger(char_group, 0, move_blocks(-power)).with(X, done_input_xpos).with(Y, lcorner(-1)).with(TOUCH_TRIGGERED, true).with(SCALING, 0.5).with(GROUPS, input_groups[8 * i + j]))
+    }
+
+    cur_xpos += blocks(1)
+}
+
+$.add(obj { // flag suffix
+    OBJ_ID: TEXT_ID,
+    X: cur_xpos,
+    Y: lcorner(2),
+    TEXT: $.b64encode("}")
+})
+cur_xpos += blocks(2)
 
 // // set up expression machine
 // expr_count_id = ?i // correct expression counter
@@ -153,7 +425,7 @@ for i in 0..N {
 //         OBJ_ID: COLLISION_BLOCK_ID,
 //         X: cur_xpos,
 //         Y: cur_ypos,
-//         GROUPS: [var_groups[i], sweep_group],
+//         GROUPS: [input_groups[i], sweep_group],
 //         BLOCK_A: coll_ids.var, // collision block ID
 //         DYNAMIC_BLOCK: true
 //     })
@@ -192,7 +464,7 @@ for i in 0..N {
 //     spike_wall_group.toggle_off()
 // })
 
-// for i in 0..SPIKE_WALL_BLOCKS {
+// for i in 0..OBSTACLE_HEIGHT {
 //     $.add(obj {
 //         OBJ_ID: SPIKE_BLOCK_ID,
 //         X: cur_xpos,
