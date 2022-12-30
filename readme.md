@@ -14,9 +14,36 @@
     * Recommended to install using [chocolatey](https://chocolatey.org/) for windows
     * Run `choco install make` in an admin Powershell terminal
 
+## Solutions
+
+Here are the solutions to each expression.  See `Converting Solution to Text` for more details on how this works.
+
+|File|ASCII|Binary/Gate Input|
+|-|-|-|
+|gates_8.txt|Hex value `AA`|`10101010`|
+|gates_32.txt|`susy`|`01110011 01110101 01110011 01111001`|
+|gates_64.txt|`mosussss`|`01101101 01101111 01110011 01110101 01110011 01110011 01110011 01110011`|
+|gates_128.txt|`mosus_is_sussy!!`|`01101101 01101111 01110011 01110101 01110011 01011111 01101001 01110011 01011111 01110011 01110101 01110011 01110011 01111001 00100001 00100001`|
+|gates_256.txt|???|???|
+
+You can convert the ascii representations of each solution into binary using the following command:
+
+```
+python -c "print(*map(lambda c: bin(ord(c))[2:].rjust(8, '0'), input()))"
+```
+
+Binary inputs are separated by spaces every 8 chars for aesthetic purposes.
+
 ## Building the Levels
 
-There are three recipes that you should run:
+Before running `make`, you must first create the following blank levels in your geometry dash save file as Spwn cannot create new levels:
+
+* CTFCHALL2022
+* CTFCHALL2022DEBUG
+
+which should correspond to the relevant variable names in the Makefile.
+
+Then, there are three recipes that you can run (along with a `clean` recipe to cleanup temporary files):
 
 * `release` (the default): Generates the level for the full expression used for the challenge (in `gates.txt`)
 * `debug`: Generates the level for the example expression for debugging purposes (in `gates_example.txt`)

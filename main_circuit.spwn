@@ -62,7 +62,7 @@ $.add(move_trigger(_lock_x_group, 0, 0, 999999).with(X, 0).with(LOCK_TO_PLAYER_X
 
 // starting from x-position `xpos`, group `group` will be locked to the player
 lock_to_player_x = (group, xpos) {
-    $.add(follow_trigger(_lock_x_group, group, duration=999999).with(X, xpos))
+    $.add(follow_trigger(group, _lock_x_group, duration=999999).with(X, xpos))
     // $.add(move_trigger(group, 0, 0, 999999).with(X, xpos).with(LOCK_TO_PLAYER_X, true))
 }
 
@@ -369,106 +369,3 @@ $.add(obj { // flag suffix
     TEXT: $.b64encode("}")
 })
 cur_xpos += blocks(2)
-
-// // set up expression machine
-// expr_count_id = ?i // correct expression counter
-// expr_count_group = ?g // group manages that machinery to increment expr_count_id 
-// sweep_group = ?g // group of objects that sweeps to the right with the player
-// coll_ids = {
-//     // IDs for the blocks that 
-//     correct1: ?b,
-//     correct2: ?b,
-
-//     var_isset: ?b, // for the blocks that check if a variable is set
-//     var: ?b // for the variables themselves
-// }
-
-// // set up events
-// on(collision(coll_ids.correct1, coll_ids.correct2), !{
-//     expr_count_id.add(1)
-// })
-
-// on(collision(coll_ids.var, coll_ids.var_isset), !{
-//     expr_count_group.move(0, move_blocks(-1), 0.1)
-//     expr_count_group.move(0, move_blocks(1), 0.1)
-// })
-
-// // set up follow trigger
-// cur_xpos += blocks(3)
-// $.add(lock_to_player_trigger(sweep_group).with(X, cur_xpos).with(Y, lcorner(-1)))
-
-// // set up incrementer collision blocks
-// $.add(obj {
-//     OBJ_ID: COLLISION_BLOCK_ID,
-//     X: cur_xpos,
-//     Y: lcorner(1),
-//     GROUPS: [expr_count_group, sweep_group],
-//     BLOCK_A: coll_ids.correct1, // collision block ID
-//     DYNAMIC_BLOCK: true
-// })
-
-// $.add(obj {
-//     OBJ_ID: COLLISION_BLOCK_ID,
-//     X: cur_xpos,
-//     Y: lcorner(0),
-//     GROUPS: [sweep_group],
-//     SCALING: 0.5,
-//     BLOCK_A: coll_ids.correct2, // collision block ID
-//     DYNAMIC_BLOCK: false
-// })
-
-// // set up collision variable blocks
-// let var_ypos = []
-// let cur_ypos = lcorner(3)
-// for i in 0..N {
-//     $.add(obj {
-//         OBJ_ID: COLLISION_BLOCK_ID,
-//         X: cur_xpos,
-//         Y: cur_ypos,
-//         GROUPS: [input_groups[i], sweep_group],
-//         BLOCK_A: coll_ids.var, // collision block ID
-//         DYNAMIC_BLOCK: true
-//     })
-
-//     var_ypos.push(cur_ypos)
-//     cur_ypos += blocks(2)
-// }
-
-// // add expressions
-// for expr in exprs {
-//     cur_xpos += blocks(3)
-
-//     for value in expr {
-//         let ypos = var_ypos[value.abs() - 1]
-//         if value > 0 {
-//             ypos += blocks(1)
-//         }
-
-//         $.add(obj {
-//             OBJ_ID: COLLISION_BLOCK_ID,
-//             X: cur_xpos, 
-//             Y: ypos,
-//             SCALING: 0.5,
-//             BLOCK_A: coll_ids.var_isset, // collision block ID
-//             DYNAMIC_BLOCK: false
-//         })
-//     }
-// }
-
-// // spike wall and toggling
-// cur_xpos += blocks(3)
-
-// spike_wall_group = ?g
-
-// on(expr_count_id.count(M), !{
-//     spike_wall_group.toggle_off()
-// })
-
-// for i in 0..OBSTACLE_HEIGHT {
-//     $.add(obj {
-//         OBJ_ID: SPIKE_BLOCK_ID,
-//         X: cur_xpos,
-//         Y: lcorner(i),
-//         GROUPS: spike_wall_group
-//     })
-// }

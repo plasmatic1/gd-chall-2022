@@ -91,8 +91,10 @@ def main():
     lines.insert(1, str(cur_g_id))
     with open(sys.argv[2], 'w') as f:
         for line in lines:
-            print(line)
+            # print(line)
             f.write(line + '\n')
+    
+    print(f'Wrote {len(lines)} gates with {inp.n_inputs()} inputs')
 
 if __name__ == '__main__':
     main()
