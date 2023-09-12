@@ -2,6 +2,17 @@
 
 Source code for the challenge "Hardest Demon Bloodbath by Riot" used in [idekCTF 2022](https://ctf.idek.team/).
 
+Challenge description:
+
+```
+Whose blood will be spilt in the Bloodbath? Who will the victors be? How many will survive? Good luck...
+Geometry Dash Level ID: 87752310
+Level Name: CTFCHALL2022
+Player ID: TLWv2
+
+Note: Wrap the flag with idek{}
+```
+
 # Installation and Usage
 
 ## Requirements
@@ -13,7 +24,7 @@ Source code for the challenge "Hardest Demon Bloodbath by Riot" used in [idekCTF
     * Used for formatting the circuit inputs into a more friendly format for spwn as it is not as powerful a scripting language as python
 * [GNU make](https://www.gnu.org/software/make/)
     * Used to build and export the level
-    * Recommended to install using [chocolatey](https://chocolatey.org/) for windows
+    * Recommended to install using [chocolatey](https://chocolatey.org/) for Windows
     * Run `choco install make` in an admin Powershell terminal
 
 ## Solutions
