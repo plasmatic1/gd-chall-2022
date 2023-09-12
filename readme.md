@@ -1,5 +1,7 @@
 # gd-chall-2022
 
+Source code for the challenge "Hardest Demon Bloodbath by Riot" used in [idekCTF 2022](https://ctf.idek.team/).
+
 # Installation and Usage
 
 ## Requirements
